@@ -29,7 +29,43 @@
         }
         .table-responsive { max-height: 600px; overflow-y: auto; }
     </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+function generarPDF(nombre, celular, ciudad, correo, productos, folio) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(14);
+  doc.text("Global MediTH - Cotización", 10, 10);
+  doc.setFontSize(11);
+  doc.text("Tel: 238 164 67 18  |  Email: globalmedith@gmail.com", 10, 20);
+  doc.text("Ubicación: Tehuacán, Puebla", 10, 26);
+
+  doc.setFontSize(12);
+  doc.text("Folio: " + folio, 10, 36);
+  doc.text("Datos del solicitante:", 10, 46);
+  doc.text("Nombre: " + nombre, 10, 54);
+  doc.text("Celular: " + celular, 10, 60);
+  doc.text("Ciudad: " + ciudad, 10, 66);
+  doc.text("Correo: " + correo, 10, 72);
+
+  doc.setFontSize(12);
+  doc.text("Productos seleccionados:", 10, 86);
+  let y = 94;
+  productos.forEach(p => {
+    doc.text(`- ${p.producto} (${p.codigo})`, 10, y);
+    y += 6;
+    doc.text(`  Fórmula: ${p.formula} | Lab: ${p.lab} | Cantidad: ${p.cantidad}`, 10, y);
+    y += 8;
+  });
+
+  doc.text("Gracias por su preferencia.", 10, y + 10);
+  doc.save("cotizacion_GlobalMediTH.pdf");
+}
+
+</script>
 </head>
+
 <body>
 
 <div id="bienvenida">
@@ -125,7 +161,32 @@
         });
     });
 
-    function generarWhatsApp() {
+    
+function generarWhatsApp() {
+    const nombre = document.getElementById("nombre").value;
+    const celular = document.getElementById("celular").value;
+    const ciudad = document.getElementById("ciudad").value;
+    const correo = document.getElementById("correo").value;
+
+    const filas = document.querySelectorAll("#tablaProductos tbody tr");
+    let productosSeleccionados = [];
+
+    filas.forEach((fila, i) => {
+        const check = fila.querySelector("input[type='checkbox']");
+        if (check.checked) {
+            const cantidad = fila.querySelector("input[type='number']").value;
+            productosSeleccionados.push({
+                producto: productos[i][0],
+                codigo: productos[i][1],
+                formula: productos[i][2],
+                lab: productos[i][3],
+                cantidad: cantidad
+            });
+        }
+    });
+
+    generarPDF(nombre, celular, ciudad, correo, productosSeleccionados, folio);
+
         const nombre = document.getElementById("nombre").value;
         const celular = document.getElementById("celular").value;
         const ciudad = document.getElementById("ciudad").value;
@@ -149,6 +210,39 @@
         window.open(url, "_blank");
         window.location.reload(); // volver al inicio
     }
+
+function generarPDF(nombre, celular, ciudad, correo, productos, folio) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+
+  doc.setFontSize(14);
+  doc.text("Global MediTH - Cotización", 10, 10);
+  doc.setFontSize(11);
+  doc.text("Tel: 238 164 67 18  |  Email: globalmedith@gmail.com", 10, 20);
+  doc.text("Ubicación: Tehuacán, Puebla", 10, 26);
+
+  doc.setFontSize(12);
+  doc.text("Folio: " + folio, 10, 36);
+  doc.text("Datos del solicitante:", 10, 46);
+  doc.text("Nombre: " + nombre, 10, 54);
+  doc.text("Celular: " + celular, 10, 60);
+  doc.text("Ciudad: " + ciudad, 10, 66);
+  doc.text("Correo: " + correo, 10, 72);
+
+  doc.setFontSize(12);
+  doc.text("Productos seleccionados:", 10, 86);
+  let y = 94;
+  productos.forEach(p => {
+    doc.text(`- ${p.producto} (${p.codigo})`, 10, y);
+    y += 6;
+    doc.text(`  Fórmula: ${p.formula} | Lab: ${p.lab} | Cantidad: ${p.cantidad}`, 10, y);
+    y += 8;
+  });
+
+  doc.text("Gracias por su preferencia.", 10, y + 10);
+  doc.save("cotizacion_GlobalMediTH.pdf");
+}
+
 </script>
 </body>
 </html>
