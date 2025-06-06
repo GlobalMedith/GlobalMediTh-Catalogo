@@ -21,7 +21,30 @@
       <input type="email" id="correo" placeholder="Correo electrónico" required>
       <button type="submit">Continuar</button>
     </form>
+
+    <div id="catalogo" class="hidden">
+      <input type="text" id="buscador" placeholder="Buscar productos...">
+      <table id="tabla-productos">
+        <thead>
+          <tr>
+            <th>Seleccionar</th>
+            <th>Código de Barras</th>
+            <th>Descripción</th>
+            <th>Fórmula</th>
+            <th>Laboratorio</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button onclick="generarCotizacion()">Solicitar Cotización</button>
+    </div>
+
     <div class="footer">© 2025 Global MediTH – Todos los derechos reservados</div>
   </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="productos.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
