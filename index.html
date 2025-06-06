@@ -5,35 +5,40 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Catálogo Global MediTH</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <style>
-    body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 0; padding: 0; }
-    header { background: #003366; color: white; padding: 1rem; text-align: center; }
-    .container { padding: 2rem; max-width: 800px; margin: auto; background: white; margin-top: 2rem; border-radius: 10px; }
+    * { box-sizing: border-box; font-family: 'Inter', sans-serif; }
+    body { margin: 0; background: #f5f8fa; color: #333; }
+    header { background-color: #003366; padding: 1rem; color: white; text-align: center; }
+    .container { max-width: 800px; margin: auto; padding: 2rem; background: white; margin-top: 2rem; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.05); }
     .hidden { display: none; }
-    label { display: block; margin-top: 1rem; }
-    input { width: 100%; padding: 0.5rem; margin-top: 0.2rem; }
-    button { margin-top: 1.5rem; padding: 0.8rem 1.5rem; background: #0066cc; color: white; border: none; cursor: pointer; border-radius: 5px; }
+    h1, h2 { margin-bottom: 0.5rem; }
+    label { display: block; margin-top: 1rem; font-weight: 600; }
+    input { width: 100%; padding: 0.6rem; margin-top: 0.3rem; border: 1px solid #ccc; border-radius: 6px; }
+    button { margin-top: 2rem; padding: 0.8rem 1.6rem; border: none; border-radius: 6px; background: #0066cc; color: white; font-weight: bold; cursor: pointer; }
+    button:hover { background: #0052a3; }
     table { width: 100%; margin-top: 1rem; border-collapse: collapse; }
-    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
-    th { background: #e6f0ff; }
+    th, td { padding: 0.6rem; border: 1px solid #ddd; text-align: left; }
+    th { background-color: #e6f0ff; }
+    .footer { text-align: center; margin: 2rem 0; font-size: 0.9rem; color: #888; }
   </style>
   <script>
     let datosCliente = {};
-    let productosEjemplo = [
-      { producto: "Paracetamol 500mg", codigo: "123456789", formula: "Paracetamol", lab: "Genérico", cantidad: 2 },
-      { producto: "Ibuprofeno 400mg", codigo: "987654321", formula: "Ibuprofeno", lab: "Genérico", cantidad: 1 }
+    let productos = [
+      { producto: "Paracetamol 500mg", codigo: "123456", formula: "Paracetamol", lab: "Genérico", cantidad: 2 },
+      { producto: "Ibuprofeno 400mg", codigo: "987654", formula: "Ibuprofeno", lab: "Genérico", cantidad: 1 }
     ];
     let folio = "";
 
-    function mostrarCatalogo() {
+    function continuar() {
       const nombre = document.getElementById("nombre").value.trim();
       const celular = document.getElementById("celular").value.trim();
       const ciudad = document.getElementById("ciudad").value.trim();
       const correo = document.getElementById("correo").value.trim();
 
       if (!nombre || !celular || !ciudad || !correo) {
-        alert("Por favor complete todos los campos.");
+        alert("Por favor completa todos los campos.");
         return;
       }
 
@@ -48,42 +53,35 @@
       document.getElementById("catalogo").classList.remove("hidden");
     }
 
-    function generarPDF() {
+    function solicitarCotizacion() {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
       doc.setFontSize(14);
       doc.text("Global MediTH - Cotización", 10, 10);
       doc.setFontSize(11);
-      doc.text("Tel: 238 164 67 18   |   Email: globalmedith@gmail.com", 10, 20);
+      doc.text("Tel: 238 164 67 18  |  Email: globalmedith@gmail.com", 10, 20);
       doc.text("Ubicación: Tehuacán, Puebla", 10, 26);
-
       doc.setFontSize(12);
       doc.text("Folio: " + folio, 10, 36);
       doc.text("Nombre: " + datosCliente.nombre, 10, 46);
       doc.text("Celular: " + datosCliente.celular, 10, 52);
       doc.text("Ciudad: " + datosCliente.ciudad, 10, 58);
       doc.text("Correo: " + datosCliente.correo, 10, 64);
-
       doc.text("Productos seleccionados:", 10, 76);
       let y = 84;
-      productosEjemplo.forEach(p => {
+      productos.forEach(p => {
         doc.text(`- ${p.producto} (${p.codigo})`, 10, y);
         y += 6;
         doc.text(`  Fórmula: ${p.formula} | Lab: ${p.lab} | Cant: ${p.cantidad}`, 10, y);
         y += 8;
       });
-
       doc.text("Gracias por su preferencia.", 10, y + 10);
       doc.save("cotizacion_GlobalMediTH.pdf");
 
-      // Simula redirección a WhatsApp
-      const mensaje = `Hola, he generado una solicitud de cotización. Folio: ${folio}`;
+      const mensaje = `Hola, soy ${datosCliente.nombre}, solicito una cotización (Folio ${folio}) desde el catálogo digital.`;
       window.open("https://wa.me/5212381646718?text=" + encodeURIComponent(mensaje), "_blank");
 
-      // Reiniciar
-      setTimeout(() => {
-        location.reload();
-      }, 1000);
+      setTimeout(() => { location.reload(); }, 1000);
     }
   </script>
 </head>
@@ -94,28 +92,32 @@
 
   <div id="bienvenida" class="container">
     <h2>Bienvenido</h2>
-    <p>Llena tus datos para generar tu cotización personalizada.</p>
-    <label>Nombre Completo</label>
-    <input id="nombre" type="text" required />
-    <label>Celular</label>
-    <input id="celular" type="text" required />
-    <label>Ciudad</label>
-    <input id="ciudad" type="text" required />
-    <label>Correo Electrónico</label>
-    <input id="correo" type="email" required />
-    <button onclick="mostrarCatalogo()">Continuar</button>
+    <p>Conoce nuestro catálogo digital. Llena tus datos para recibir una cotización personalizada con folio de seguimiento.</p>
+    <label for="nombre">Nombre completo</label>
+    <input id="nombre" type="text" placeholder="Ej. Juan Pérez"/>
+    <label for="celular">Celular</label>
+    <input id="celular" type="text" placeholder="Ej. 238 123 4567"/>
+    <label for="ciudad">Ciudad</label>
+    <input id="ciudad" type="text" placeholder="Ej. Tehuacán"/>
+    <label for="correo">Correo electrónico</label>
+    <input id="correo" type="email" placeholder="Ej. correo@ejemplo.com"/>
+    <button onclick="continuar()">Continuar</button>
   </div>
 
   <div id="catalogo" class="container hidden">
     <h2>Productos Seleccionados</h2>
     <table>
-      <thead><tr><th>Producto</th><th>Código</th><th>Fórmula</th><th>Lab</th><th>Cant.</th></tr></thead>
+      <thead><tr><th>Producto</th><th>Código</th><th>Fórmula</th><th>Laboratorio</th><th>Cantidad</th></tr></thead>
       <tbody>
-        <tr><td>Paracetamol 500mg</td><td>123456789</td><td>Paracetamol</td><td>Genérico</td><td>2</td></tr>
-        <tr><td>Ibuprofeno 400mg</td><td>987654321</td><td>Ibuprofeno</td><td>Genérico</td><td>1</td></tr>
+        <tr><td>Paracetamol 500mg</td><td>123456</td><td>Paracetamol</td><td>Genérico</td><td>2</td></tr>
+        <tr><td>Ibuprofeno 400mg</td><td>987654</td><td>Ibuprofeno</td><td>Genérico</td><td>1</td></tr>
       </tbody>
     </table>
-    <button onclick="generarPDF()">Solicitar Cotización</button>
+    <button onclick="solicitarCotizacion()">Solicitar Cotización</button>
+  </div>
+
+  <div class="footer">
+    © 2025 Global MediTH – Todos los derechos reservados
   </div>
 </body>
 </html>
