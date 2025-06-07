@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Catálogo Global MediTH</title>
   <link rel="stylesheet" href="style.css">
-  <style>.hidden { display: none; }</style>
 </head>
 <body>
   <div class="container">
@@ -23,8 +22,8 @@
       <button type="submit">Continuar</button>
     </form>
 
-    <!-- El catálogo está completamente oculto hasta presionar Continuar -->
-    <div id="catalogo" class="hidden">
+    <!-- El catálogo solo se mostrará después de llenar el formulario -->
+    <div id="catalogo" style="display: none;">
       <input type="text" id="buscador" placeholder="Buscar productos...">
       <table id="tabla-productos">
         <thead>
@@ -46,10 +45,10 @@
   </div>
 
   <script>
-    document.getElementById("formulario").addEventListener("submit", function(event) {
-      event.preventDefault();
-      document.getElementById("formulario").classList.add("hidden");
-      document.getElementById("catalogo").classList.remove("hidden");
+    document.getElementById("formulario").addEventListener("submit", function(e) {
+      e.preventDefault();
+      document.getElementById("formulario").style.display = "none";
+      document.getElementById("catalogo").style.display = "block";
     });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
