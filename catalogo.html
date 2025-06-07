@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Catálogo</title>
+  <link rel="stylesheet" href="estilos.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Catálogo de Productos</h1>
+    <input type="text" id="buscador" placeholder="Buscar por nombre, código o fórmula..." />
+    <table id="tabla">
+      <thead>
+        <tr>
+          <th>Código de Barras</th>
+          <th>Descripción</th>
+          <th>Fórmula</th>
+          <th>Laboratorio</th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button onclick="solicitarCotizacion()">Solicitar Cotización</button>
+    <footer>&copy; 2025 Global MediTH – Todos los derechos reservados</footer>
+  </div>
+  <script src="utils.js"></script>
+</body>
+</html>

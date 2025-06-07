@@ -1,0 +1,34 @@
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f3f6fa;
+    margin: 0;
+    padding: 20px;
+}
+.container {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+.logo {
+    width: 80px;
+    display: block;
+    margin: auto;
+}
+h1 {
+    text-align: center;
+    color: #003366;
+}
+input, button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 1rem;
+}
+footer {
+    text-align: center;
+    font-size: 0.85rem;
+    margin-top: 1.5rem;
+}
