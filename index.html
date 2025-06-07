@@ -1,0 +1,31 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Catálogo Global MediTH</title>
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <img src="assets/logo.png" alt="Logo Global MediTH" class="logo">
+        <h1>Bienvenido al Catálogo</h1>
+        <p>En Global MediTH garantizamos atención personalizada, productos de calidad y la mejor experiencia en cotización farmacéutica. <strong>Gracias por confiar en nosotros.</strong></p>
+        <form id="formulario">
+            <input type="text" placeholder="Nombre completo" required>
+            <input type="text" placeholder="Celular" required>
+            <input type="text" placeholder="Ciudad" required>
+            <input type="email" placeholder="Correo electrónico" required>
+            <button type="submit">Continuar</button>
+        </form>
+        <footer>© 2025 Global MediTH – Todos los derechos reservados</footer>
+    </div>
+    <script>
+        document.getElementById('formulario').addEventListener('submit', function(e){
+            e.preventDefault();
+            window.location.href = 'catalogo.html';
+        });
+    </script>
+</body>
+</html>
