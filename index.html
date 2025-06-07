@@ -1,0 +1,51 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Catálogo Global MediTH</title>
+  <link rel="stylesheet" href="style.css">
+  <style>.hidden { display: none; }</style>
+</head>
+<body>
+  <div class="container">
+    <img src="logo.png" alt="Logo Global MediTH" class="logo"/>
+    <h1>Bienvenido al Catálogo</h1>
+    <p class="mensaje">
+      En Global MediTH garantizamos atención personalizada, productos de calidad y la mejor experiencia en cotización farmacéutica. <strong>Gracias por confiar en nosotros.</strong>
+    </p>
+    <form id="formulario">
+      <input type="text" id="nombre" placeholder="Nombre completo" required>
+      <input type="text" id="celular" placeholder="Celular" required>
+      <input type="text" id="ciudad" placeholder="Ciudad" required>
+      <input type="email" id="correo" placeholder="Correo electrónico" required>
+      <button type="submit">Continuar</button>
+    </form>
+
+    <div id="catalogo" class="hidden">
+      <input type="text" id="buscador" placeholder="Buscar productos...">
+      <table id="tabla-productos">
+        <thead>
+          <tr>
+            <th>Seleccionar</th>
+            <th>Código de Barras</th>
+            <th>Descripción</th>
+            <th>Fórmula</th>
+            <th>Laboratorio</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+      <button onclick="generarCotizacion()">Solicitar Cotización</button>
+    </div>
+
+    <div class="footer">© 2025 Global MediTH – Todos los derechos reservados</div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="productos.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
